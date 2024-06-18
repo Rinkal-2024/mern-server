@@ -4,16 +4,15 @@ const port = process.env.PORT || 5000;
 const app = express();
 app.use(cors());
 app.use(express.json());
-const Router = require('express');
-const router = Router();
+const router = express.Router();  // Correctly instantiate the router
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
-app.use('/', router);
+
 // MongoDB config here
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-const uri = "mongodb+srv://mern-book-store:DQy44OwFEGXTEeMT@cluster0.jctguec.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = process.env.MONGODB_URI || "mongodb+srv://mern-book-store:DQy44OwFEGXTEeMT@cluster0.jctguec.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -79,6 +78,7 @@ async function run() {
             res.send(result);
         });
 
+        // Test route
         router.get('/test', (req, res) => {
             res.send('Test route working!');
         });
@@ -92,6 +92,8 @@ async function run() {
 }
 run().catch(console.dir);
 
+// Attach the router to the app with a base path
+app.use('/api', router);
 
 app.listen(port, () => {
     console.log(`Your server is running on http://localhost:${port}`);
