@@ -1,11 +1,16 @@
 const express = require('express')
-const app = express();
 const cors = require('cors')
 const port = process.env.PORT || 5000;
+const app = express();
 app.use(cors());
 app.use(express.json());
+const Router = require('express')
+const router = Router();
 
-app.get('/', (req, res) => {
+
+
+
+router.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
@@ -31,21 +36,21 @@ async function run() {
 
 
         // insert a book to db: Post Method
-        app.post("/upload-book", async (req, res) => {
+        router.post("/upload-book", async (req, res) => {
             const data = req.body;
             const result = await bookCollection.insertOne(data);
             res.send(result);
         })
 
         // get all books from db
-        // app.get("/all-books", async (req, res) => {
+        // router.get("/all-books", async (req, res) => {
         //     const books = bookCollection.find();
         //     const result = await books.toArray();
         //     res.send(result)
         // })
 
         // get all books & find by a category from db
-        app.get("/all-books", async (req, res) => {
+        router.get("/all-books", async (req, res) => {
             let query = {};
             if (req.query?.category) {
                 query = { category: req.query.category }
@@ -56,7 +61,7 @@ async function run() {
         })
 
         // update a books method
-        app.patch("/book/:id", async (req, res) => {
+        router.patch("/book/:id", async (req, res) => {
             const id = req.params.id;
             // console.log(id);
             const updateBookData = req.body;
@@ -74,7 +79,7 @@ async function run() {
         })
 
         // delete a item from db
-        app.delete("/book/:id", async (req, res) => {
+        router.delete("/book/:id", async (req, res) => {
             const id = req.params.id;
             const filter = { _id: new ObjectId(id) };
             const result = await bookCollection.deleteOne(filter);
@@ -82,7 +87,7 @@ async function run() {
         })
 
         // get a single book data
-        app.get("/book/:id", async (req, res) => {
+        router.get("/book/:id", async (req, res) => {
             const id = req.params.id;
             const filter = { _id: new ObjectId(id) };
             const result = await bookCollection.findOne(filter);
