@@ -79,6 +79,10 @@ async function run() {
             res.send(result);
         });
 
+        router.get('/test', (req, res) => {
+            res.send('Test route working!');
+        });
+
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
@@ -87,6 +91,7 @@ async function run() {
     }
 }
 run().catch(console.dir);
+
 
 app.listen(port, () => {
     console.log(`Your server is running on http://localhost:${port}`);
