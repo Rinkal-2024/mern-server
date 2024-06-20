@@ -8,7 +8,7 @@ const router = express.Router();
 app.use(express.json());
 app.use(cors({
     credentials: 'include',
-    origin: 'https://mern-client-three.vercel.app',    
+    origin:'https://mern-client-three.vercel.app',    
 }));
 
 app.get('/', (req, res) => {
@@ -123,7 +123,7 @@ async function run() {
 run().catch(console.dir);
 
 // Attach the router to the app with a base path
-app.use('/', router);
+
 
 app.listen(port, () => {
     console.log(`Your server is running on http://localhost:${port}`);
