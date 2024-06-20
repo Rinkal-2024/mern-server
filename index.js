@@ -2,9 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const port = process.env.PORT || 5000;
 const app = express();
-app.use(cors());
 app.use(express.json());
 const router = express.Router();
+
+app.use(cors({
+    credentials: 'include',
+    origin: 'https://mern-client-three.vercel.app',    
+}));
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
@@ -118,7 +122,7 @@ async function run() {
 run().catch(console.dir);
 
 // Attach the router to the app with a base path
-app.use('/api', router);
+app.use('/', router);
 
 app.listen(port, () => {
     console.log(`Your server is running on http://localhost:${port}`);
