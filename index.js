@@ -20,20 +20,20 @@ app.use(cors({
     origin: ['http://localhost:5173' ,'http://192.168.0.120:5173'],
 }));
 
-// MongoDB config
 const uri = process.env.MONGODB_URL;
 
 if (!uri) {
     throw new Error('MONGODB_URL is not defined in the environment variables');
 }
-
-// Connect to MongoDB using Mongoose
-mongoose.connect(uri, {
-    
+mongoose.connect(uri, {  
 })
 .then(() => console.log("Connected to MongoDB!"))
 .catch(err => console.error("MongoDB connection error:", err));
 
+
+app.get('/' ,(req,res) =>{
+    res.send('Welcome to the Bookstore API')
+})
 // Define your routes
 app.use("/user", userRoutes);
 app.use('/' , bookRouter)
