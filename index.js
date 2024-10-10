@@ -1,26 +1,42 @@
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const bookRouter = require('./bookRouter');
-const port = process.env.PORT || 8000;
+const bodyparser = require('body-parser');
+const userRoutes = require('./router/userRoute');
+const bookRouter = require('./router/bookRouter');
+
+dotenv.config();
+
 const app = express();
+const port = process.env.PORT || 5000;
 
-dotenv.config()
-
-require('./dbConfig')()
-
-//middlewares
+// Middlewares
 app.use(express.json());
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({ extended: true }));
 app.use(cors({
     credentials: 'include',
-    origin:'',    
+    origin: ['http://localhost:5173' ,'http://192.168.0.120:5173'],
 }));
 
-app.use('/api' ,bookRouter)
+// MongoDB config
+const uri = process.env.MONGODB_URL;
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+if (!uri) {
+    throw new Error('MONGODB_URL is not defined in the environment variables');
+}
+
+// Connect to MongoDB using Mongoose
+mongoose.connect(uri, {
+    
+})
+.then(() => console.log("Connected to MongoDB!"))
+.catch(err => console.error("MongoDB connection error:", err));
+
+// Define your routes
+app.use("/user", userRoutes);
+app.use('/' , bookRouter)
 
 app.listen(port, () => {
     console.log(`Your server is running on http://localhost:${port}`);
