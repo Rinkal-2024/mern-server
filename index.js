@@ -36,7 +36,7 @@ app.get('/' ,(req,res) =>{
 })
 // Define your routes
 app.use("/user", userRoutes);
-app.use(bookRouter)
+app.use('/book',bookRouter)
 
 app.listen(port, () => {
     console.log(`Your server is running on http://localhost:${port}`);
