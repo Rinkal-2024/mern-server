@@ -38,6 +38,7 @@ async function run() {
                 }
                 const result = await bookCollection.find(query).toArray();
                 res.send(result);
+                console.log("Received request for all books");
             } catch (error) {
                 console.error('Error fetching books:', error);
                 res.status(500).send({ error: 'Failed to fetch books' });
