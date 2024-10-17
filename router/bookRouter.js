@@ -31,7 +31,7 @@ async function run() {
 
         // Get all books & find by category
         bookRouter.get("/all-books", async (req, res) => {
-            // console.log("Received request for all books");
+            console.log("Received request for all books");
             try {
                 let query = {};
                 if (req.query?.category) {
