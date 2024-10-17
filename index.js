@@ -5,7 +5,6 @@ const dotenv = require('dotenv');
 const bodyparser = require('body-parser');
 const userRoutes = require('./router/userRoute');
 const bookRouter = require('./router/bookRouter');
-
 dotenv.config();
 
 const app = express();
@@ -24,8 +23,7 @@ const uri = process.env.MONGODB_URL;
 if (!uri) {
     throw new Error('MONGODB_URL is not defined in the environment variables');
 }
-mongoose.connect(uri, {  
-})
+mongoose.connect(uri, {})
 .then(() => console.log("Connected to MongoDB!"))
 .catch(err => console.error("MongoDB connection error:", err));
 
@@ -42,9 +40,10 @@ app.get('/test', async (req, res) => {
     }
   });
 
+
 // Define your routes
 app.use("/user", userRoutes);
-app.use('/api',bookRouter)
+app.use(bookRouter)
 
 app.listen(port, () => {
     console.log(`Your server is running on http://localhost:${port}`);
