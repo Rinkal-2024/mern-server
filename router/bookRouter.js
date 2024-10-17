@@ -31,7 +31,7 @@ async function run() {
 
         // Get all books & find by category
         bookRouter.get("/all-books", async (req, res) => {
-            console.log("Received request for all books");
+            // console.log("Received request for all books");
             try {
                 let query = {};
                 if (req.query?.category) {
@@ -39,7 +39,7 @@ async function run() {
                 }
                 const result = await bookCollection.find(query).toArray();
                 res.send(result);
-                console.log("Fetched books:", result);
+                // console.log("Fetched books:", result);
             } catch (error) {
                 console.error('Error fetching books:', error);
                 res.status(500).send({ error: 'Failed to fetch books' });

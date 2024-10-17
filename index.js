@@ -17,7 +17,7 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(cors({
     credentials: 'include',
-    origin: ['http://localhost:5173' ,'http://192.168.0.120:5173' ,'https://mern-client-three.vercel.app'],
+    origin: ['http://localhost:5173' ,'http://192.168.0.120:5173' ,'https://mern-client-three.vercel.app','https://mern-book-inventory-45a2a.web.app/'],
 }));
 
 const uri = process.env.MONGODB_URL;
