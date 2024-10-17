@@ -33,10 +33,15 @@ app.get('/' ,(req,res) =>{
     res.send('Welcome to the Bookstore API')
 })
 
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-});
+app.get('/test', async (req, res) => {
+    try {
+      await mongoose.connection.db.admin().ping();
+      res.send('MongoDB is connected!');
+    } catch (error) {
+      res.status(500).send('Connection error: ' + error.message);
+    }
+  });
+  
 
 // Define your routes
 app.use("/user", userRoutes);
