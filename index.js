@@ -41,11 +41,10 @@ app.get('/test', async (req, res) => {
       res.status(500).send('Connection error: ' + error.message);
     }
   });
-  
 
 // Define your routes
 app.use("/user", userRoutes);
-app.use(bookRouter)
+app.use('/api',bookRouter)
 
 app.listen(port, () => {
     console.log(`Your server is running on http://localhost:${port}`);
