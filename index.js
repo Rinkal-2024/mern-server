@@ -10,7 +10,6 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
-
 // Middlewares
 app.use(express.json());
 app.use(bodyparser.json());
@@ -30,10 +29,15 @@ mongoose.connect(uri, {
 .then(() => console.log("Connected to MongoDB!"))
 .catch(err => console.error("MongoDB connection error:", err));
 
-
 app.get('/' ,(req,res) =>{
     res.send('Welcome to the Bookstore API')
 })
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
+
 // Define your routes
 app.use("/user", userRoutes);
 app.use(bookRouter)
@@ -41,3 +45,4 @@ app.use(bookRouter)
 app.listen(port, () => {
     console.log(`Your server is running on http://localhost:${port}`);
 });
+module.exports = app;
